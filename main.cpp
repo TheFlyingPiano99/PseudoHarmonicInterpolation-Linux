@@ -82,7 +82,7 @@ int main(int argc, char **argv) {
 			[](double t){ double r = 2; return Geometry::Point2D(r * std::cos(t * 2 * M_PI), r * std::sin(t * 2 * M_PI)); }
 		),
 		std::function<double(Geometry::Point2D)>(
-			[](Geometry::Point2D p) { return std::sin(p[0] * 2 * M_PI); }
+			[](Geometry::Point2D p) { return std::sin(p[0] * 2 * M_PI) + std::sin(p[0] * 2 * M_PI); }
 		)
 	);
 	write_geometry(surface1, "surface1.obj");
@@ -92,7 +92,7 @@ int main(int argc, char **argv) {
 			[](double t) { double r = 2; return Geometry::Point2D((r + std::sin(t * 4 * 2 * M_PI)) * std::cos(t * 2 * M_PI), (r + std::sin(t * 4 * 2 * M_PI)) * std::sin(t * 2 * M_PI)); }
 		),
 		std::function<double(Geometry::Point2D)>(
-			[](Geometry::Point2D p) { return std::sin(p[0] * 2 * M_PI) * std::sin(p[1] * 2 * M_PI); }
+			[](Geometry::Point2D p) { return std::sin(p[0] * 2 * M_PI) + std::sin(p[0] * 2 * M_PI); }
 		)
 	);
 	write_geometry(surface2, "surface2.obj");
