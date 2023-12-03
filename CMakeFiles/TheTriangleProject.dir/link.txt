@@ -1,0 +1,1 @@
+/usr/bin/gcc -rdynamic CMakeFiles/TheTriangleProject.dir/main.o -o TheTriangleProject  triangle/triangle.o 

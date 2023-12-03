@@ -1,0 +1,3 @@
+/home/zoltan/codeProjects/PseudoharmonicSurface/CMakeFiles/TheTriangleProject.dir
+/home/zoltan/codeProjects/PseudoharmonicSurface/CMakeFiles/edit_cache.dir
+/home/zoltan/codeProjects/PseudoharmonicSurface/CMakeFiles/rebuild_cache.dir
