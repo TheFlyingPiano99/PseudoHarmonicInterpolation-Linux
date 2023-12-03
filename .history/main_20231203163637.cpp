@@ -79,7 +79,7 @@ int main(int argc, char **argv) {
 	// Create surface:
 	Geometry::ModifiedGordonWixomSurface surface1(
 		std::function<Geometry::Point2D(double)>(
-			[](double t){ double r = 2; return Geometry::Point2D((r /*+ std::sin(t * 50)*/) * std::cos(t * 2 * M_PI), (r /*+ std::sin(t * 50)*/) * std::sin(t * 2 * M_PI)); }
+			[](double t){ double r = 2; return Geometry::Point2D((r + std::sin(t * 50)) * std::cos(t * 2 * M_PI), (r + std::sin(t * 50)) * std::sin(t * 2 * M_PI)); }
 		),
 		std::function<double(Geometry::Point2D)>(
 			[](Geometry::Point2D p){ return std::sin(p[0] * 2 * M_PI); }

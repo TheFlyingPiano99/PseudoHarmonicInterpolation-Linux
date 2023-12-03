@@ -12,7 +12,7 @@ extern "C" {
 #include "triangle/triangle.h"
 }
 
-void write_geometry(const Geometry::ModifiedGordonWixomSurface& surface, const char* filename) {
+void write_geometry(const Geometry::ModifiedGordonWixomSurface& surface) {
 	std::vector<Geometry::Point2D> discretizedCurve = surface.getDiscretizedCurve();
 
 	size_t n = discretizedCurve.size();	// # of points
@@ -23,7 +23,7 @@ void write_geometry(const Geometry::ModifiedGordonWixomSurface& surface, const c
 		points.push_back(discretizedCurve[i][0]);
 		points.push_back(discretizedCurve[i][1]);
 	}
-	double max_area = 0.01 * 0.611416847148; // nice number
+	double max_area = 0.001 * 0.611416847148; // nice number
 
   // Input segments : just a closed polygon
   std::vector<int> segments; segments.reserve(n * 2);
@@ -61,7 +61,7 @@ void write_geometry(const Geometry::ModifiedGordonWixomSurface& surface, const c
   triangulate(const_cast<char *>(cmd.str().c_str()), &in, &out, (struct triangulateio *)nullptr);
 
 	// Write an OBJ file as the output
-	std::ofstream f(filename);
+	std::ofstream f("test.obj");
 	for (int i = 0; i < out.numberofpoints; ++i)
 		f << "v " << out.pointlist[2*i] << ' ' << out.pointlist[2*i+1] << ' '
 		<< surface.eval(Geometry::Point2D(out.pointlist[2 * i], out.pointlist[2 * i + 1])) << std::endl;
@@ -79,13 +79,13 @@ int main(int argc, char **argv) {
 	// Create surface:
 	Geometry::ModifiedGordonWixomSurface surface1(
 		std::function<Geometry::Point2D(double)>(
-			[](double t){ double r = 2; return Geometry::Point2D((r /*+ std::sin(t * 50)*/) * std::cos(t * 2 * M_PI), (r /*+ std::sin(t * 50)*/) * std::sin(t * 2 * M_PI)); }
+			[](double t){ double r = 2; return Geometry::Point2D(r * std::cos(t * 2 * M_PI), r * std::sin(t * 2 * M_PI)); }
 		),
 		std::function<double(Geometry::Point2D)>(
 			[](Geometry::Point2D p){ return std::sin(p[0] * 2 * M_PI); }
 		)
 	);
-	write_geometry(surface1, "surface1.obj");
+	write_geometry(surface1);
 
 	return 0;
 }
