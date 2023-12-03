@@ -20,16 +20,22 @@ double Geometry::ModifiedGordonWixomSurface::eval(const Point2D &x)
         if (2 > intersections.size()) {
             continue;
         }
+        int idx_of_previous_intersect_to_section = 0;
+        for (int j = 0; j < intersections.size() - 1; j += 2) {
+            if ((intersections[j] - x).dot(intersections[j + 1] - x) < 0) {
+                idx_of_previous_intersect_to_section = j;
+            }
+        }
         double a = 0.0;
         double b = 0.0;
-        double c = 1.0 / (intersections[0] - x).length();
+        double c = 1.0 / (intersections[idx_of_previous_intersect_to_section] - x).length();
         double d = 0.0;
-        for (int i = 0; i < intersections.size(); i++) {
+        for (int j = 0; j < intersections.size(); j++) {
             double distance = (intersections[i] - x).length();
-            a += ((i == 0 || i % 2 == 1)? 1.0 : -1.0) * height(intersections[i]) / distance;
-            b += ((i == 0 || i % 2 == 1)? 1.0 : -1.0) / distance;
-            if (0 < i) {
-                d += ((i == 0 || i % 2 == 1)? 1.0 : -1.0) / distance;
+            a += ((j == 0 || j % 2 == 1)? 1.0 : -1.0) * height(intersections[i]) / distance;
+            b += ((j == 0 || j % 2 == 1)? 1.0 : -1.0) / distance;
+            if (idx_of_previous_intersect_to_section != j) {
+                d += ((j == 0 || j % 2 == 1)? 1.0 : -1.0) / distance;
             }
         }
         c *= d;
