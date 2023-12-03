@@ -57,18 +57,18 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/zoltan/codeProjects/PseudoharmonicSurface
+CMAKE_SOURCE_DIR = /home/simon/Documents/Projects/PseudoHarmonicInterpolation-Linux
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/zoltan/codeProjects/PseudoharmonicSurface
+CMAKE_BINARY_DIR = /home/simon/Documents/Projects/PseudoHarmonicInterpolation-Linux
 
 #=============================================================================
 # Targets provided globally by CMake.
 
 # Special rule for the target edit_cache
 edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
+	/usr/bin/ccmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/zoltan/codeProjects/PseudoharmonicSurface/CMakeFiles /home/zoltan/codeProjects/PseudoharmonicSurface//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/simon/Documents/Projects/PseudoHarmonicInterpolation-Linux/CMakeFiles /home/simon/Documents/Projects/PseudoHarmonicInterpolation-Linux//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/zoltan/codeProjects/PseudoharmonicSurface/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/simon/Documents/Projects/PseudoHarmonicInterpolation-Linux/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -117,32 +117,77 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named TheTriangleProject
+# Target rules for targets named PseudoHarmonicSurface
 
 # Build rule for target.
-TheTriangleProject: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 TheTriangleProject
-.PHONY : TheTriangleProject
+PseudoHarmonicSurface: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 PseudoHarmonicSurface
+.PHONY : PseudoHarmonicSurface
 
 # fast build rule for target.
-TheTriangleProject/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/TheTriangleProject.dir/build.make CMakeFiles/TheTriangleProject.dir/build
-.PHONY : TheTriangleProject/fast
+PseudoHarmonicSurface/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PseudoHarmonicSurface.dir/build.make CMakeFiles/PseudoHarmonicSurface.dir/build
+.PHONY : PseudoHarmonicSurface/fast
 
 # target to build an object file
 main.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/TheTriangleProject.dir/build.make CMakeFiles/TheTriangleProject.dir/main.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PseudoHarmonicSurface.dir/build.make CMakeFiles/PseudoHarmonicSurface.dir/main.o
 .PHONY : main.o
 
 # target to preprocess a source file
 main.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/TheTriangleProject.dir/build.make CMakeFiles/TheTriangleProject.dir/main.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PseudoHarmonicSurface.dir/build.make CMakeFiles/PseudoHarmonicSurface.dir/main.i
 .PHONY : main.i
 
 # target to generate assembly for a file
 main.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/TheTriangleProject.dir/build.make CMakeFiles/TheTriangleProject.dir/main.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PseudoHarmonicSurface.dir/build.make CMakeFiles/PseudoHarmonicSurface.dir/main.s
 .PHONY : main.s
+
+# target to build an object file
+matrix3x3.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PseudoHarmonicSurface.dir/build.make CMakeFiles/PseudoHarmonicSurface.dir/matrix3x3.o
+.PHONY : matrix3x3.o
+
+# target to preprocess a source file
+matrix3x3.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PseudoHarmonicSurface.dir/build.make CMakeFiles/PseudoHarmonicSurface.dir/matrix3x3.i
+.PHONY : matrix3x3.i
+
+# target to generate assembly for a file
+matrix3x3.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PseudoHarmonicSurface.dir/build.make CMakeFiles/PseudoHarmonicSurface.dir/matrix3x3.s
+.PHONY : matrix3x3.s
+
+# target to build an object file
+modifiedgordonwixomsurface.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PseudoHarmonicSurface.dir/build.make CMakeFiles/PseudoHarmonicSurface.dir/modifiedgordonwixomsurface.o
+.PHONY : modifiedgordonwixomsurface.o
+
+# target to preprocess a source file
+modifiedgordonwixomsurface.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PseudoHarmonicSurface.dir/build.make CMakeFiles/PseudoHarmonicSurface.dir/modifiedgordonwixomsurface.i
+.PHONY : modifiedgordonwixomsurface.i
+
+# target to generate assembly for a file
+modifiedgordonwixomsurface.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PseudoHarmonicSurface.dir/build.make CMakeFiles/PseudoHarmonicSurface.dir/modifiedgordonwixomsurface.s
+.PHONY : modifiedgordonwixomsurface.s
+
+# target to build an object file
+vector.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PseudoHarmonicSurface.dir/build.make CMakeFiles/PseudoHarmonicSurface.dir/vector.o
+.PHONY : vector.o
+
+# target to preprocess a source file
+vector.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PseudoHarmonicSurface.dir/build.make CMakeFiles/PseudoHarmonicSurface.dir/vector.i
+.PHONY : vector.i
+
+# target to generate assembly for a file
+vector.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PseudoHarmonicSurface.dir/build.make CMakeFiles/PseudoHarmonicSurface.dir/vector.s
+.PHONY : vector.s
 
 # Help Target
 help:
@@ -152,10 +197,19 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... TheTriangleProject"
+	@echo "... PseudoHarmonicSurface"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... matrix3x3.o"
+	@echo "... matrix3x3.i"
+	@echo "... matrix3x3.s"
+	@echo "... modifiedgordonwixomsurface.o"
+	@echo "... modifiedgordonwixomsurface.i"
+	@echo "... modifiedgordonwixomsurface.s"
+	@echo "... vector.o"
+	@echo "... vector.i"
+	@echo "... vector.s"
 .PHONY : help
 
 

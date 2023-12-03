@@ -8,7 +8,7 @@ Geometry::ModifiedGordonWixomSurface::ModifiedGordonWixomSurface(const std::func
     discretizeCurve();
 }
 
-double Geometry::ModifiedGordonWixomSurface::eval(const Point2D &x)
+double Geometry::ModifiedGordonWixomSurface::eval(const Point2D &x) const
 {
     constexpr int n = 100;
     constexpr double delta_theta = 2.0 * M_PI / n;
@@ -17,15 +17,6 @@ double Geometry::ModifiedGordonWixomSurface::eval(const Point2D &x)
     for (int i = 0; i < n; i++) {
         Vector2D direction(std::cos(i * delta_theta), std::sin(i * delta_theta));
         auto intersections = findLineCurveIntersections(x, direction);
-        if (2 > intersections.size()) {
-            continue;
-        }
-        int idx_of_previous_intersect_to_section = 0;
-        for (int j = 0; j < intersections.size() - 1; j += 2) {
-            if ((intersections[j] - x).dot(intersections[j + 1] - x) < 0) {
-                idx_of_previous_intersect_to_section = j;
-            }
-        }
         double a = 0.0;
         double b = 0.0;
         double c = 1.0 / (intersections[idx_of_previous_intersect_to_section] - x).length();
@@ -43,6 +34,8 @@ double Geometry::ModifiedGordonWixomSurface::eval(const Point2D &x)
         integral_div += c * delta_theta;
     }
     double u = integral_den / integral_div;
+    if (u != u)
+        u = height(x);
     return u;
 }
 
@@ -60,7 +53,7 @@ void Geometry::ModifiedGordonWixomSurface::setHeight(const std::function<double(
 void Geometry::ModifiedGordonWixomSurface::discretizeCurve()
 {
     discretizedCurve.clear();
-    constexpr int n = 128;
+    constexpr int n = 256;
     for (int i = 0; i < n; i++) {
         Point2D p = curve(i / (double)n);
         discretizedCurve.push_back(p);
@@ -88,7 +81,7 @@ void Geometry::ModifiedGordonWixomSurface::discretizeCurve()
 
 std::vector<Geometry::Point2D> Geometry::ModifiedGordonWixomSurface::findLineCurveIntersections(
     const Point2D& x, const Vector2D& direction
-)
+) const
 {
     std::vector<Point2D> intersection_points;
     for (int i = 0; i < discretizedCurve.size(); i++){
