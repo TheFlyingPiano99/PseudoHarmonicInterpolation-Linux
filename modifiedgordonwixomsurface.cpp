@@ -16,7 +16,21 @@ double Geometry::ModifiedGordonWixomSurface::eval(const Point2D &x) const
     double integral_div = 0.0;
     for (int i = 0; i < n; i++) {
         Vector2D direction(std::cos(i * delta_theta), std::sin(i * delta_theta));
+
         auto intersections = findLineCurveIntersections(x, direction);
+
+        if (intersections.size() % 2 != 0) {
+            continue;
+        }
+
+        inr idx_of_previous_intersect_to_section = 0;
+        for (int j = 0; j < intersections.size() - 1; j += 2) {
+            if ((intersections[j] - x).dot(intersections[j + 1] - x)) {
+                idx_of_previous_intersect_to_section = j;
+                break;
+            }
+        }
+
         double a = 0.0;
         double b = 0.0;
         double c = 1.0 / (intersections[idx_of_previous_intersect_to_section] - x).length();
