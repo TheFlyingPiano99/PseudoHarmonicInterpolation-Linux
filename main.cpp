@@ -95,11 +95,11 @@ int main(int argc, char **argv) {
 			[](Geometry::Point2D p) { return 0.5 * std::sin(p[0] * 2 * M_PI) + 0.5 * std::sin(p[0] * 2 * M_PI); }
 		)
 	);
-	write_geometry(surface2, "surface3.obj");
+	write_geometry(surface2, "surface2.obj");
 
 	Geometry::ModifiedGordonWixomSurface surface3(
 		std::function<Geometry::Point2D(double)>(
-			[](double t) { double r = 3; return Geometry::Point2D((r + 0.5 * std::sin(t * 6 * 2 * M_PI)) * std::cos(t * 2 * M_PI), (r + 0.5 * std::sin(t * 6 * 2 * M_PI)) * std::sin(t * 2 * M_PI)); }
+			[](double t) { double r = 2; return Geometry::Point2D((r + 0.5 * std::sin(t * 6 * 2 * M_PI)) * std::cos(t * 2 * M_PI), (r + 0.5 * std::sin(t * 6 * 2 * M_PI)) * std::sin(t * 2 * M_PI)); }
 		),
 		std::function<double(Geometry::Point2D)>(
 			[](Geometry::Point2D p) { return 0.5 * std::sin(p[0] * 2 * M_PI) * 0.5 * std::sin(p[0] * 2 * M_PI); }
