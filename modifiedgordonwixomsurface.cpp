@@ -33,14 +33,14 @@ double Geometry::ModifiedGordonWixomSurface::eval(const Point2D &x) const
 
         double a = 0.0;
         double b = 0.0;
-        double c = 1.0 / (intersections[0] - x).length();
+        double c = 1.0 / (intersections[idx_of_previous_intersect_to_section] - x).length();
         double d = 0.0;
         for (int j = 0; j < intersections.size(); j++) {
             double distance = (intersections[j] - x).length();
             a += ((j == 0 || j % 2 == 1)? 1.0 : -1.0) * height(intersections[j]) / distance;
             b += ((j == 0 || j % 2 == 1)? 1.0 : -1.0) / distance;
             if (0 != j) {
-                d += ((j == 0 || j % 2 == 1)? 1.0 : -1.0) / distance;
+                d += ((idx_of_previous_intersect_to_section == 0 || j % 2 == 1)? 1.0 : -1.0) / distance;
             }
         }
         c *= d;
