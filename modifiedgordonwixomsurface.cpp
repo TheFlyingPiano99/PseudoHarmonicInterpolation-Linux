@@ -25,7 +25,7 @@ double Geometry::ModifiedGordonWixomSurface::eval(const Point2D &x) const
 
         int idx_of_previous_intersect_to_section = 0;
         for (int j = 0; j < intersections.size() - 1; j += 2) {
-            if ((intersections[j] - x).dot(intersections[j + 1] - x)) {
+            if ((intersections[j] - x).dot(intersections[j + 1] - x) < 0) {
                 idx_of_previous_intersect_to_section = j;
                 break;
             }
@@ -33,8 +33,20 @@ double Geometry::ModifiedGordonWixomSurface::eval(const Point2D &x) const
 
         double a = 0.0;
         double b = 0.0;
-        double c = 1.0 / (intersections[idx_of_previous_intersect_to_section] - x).length();
-        double d = 0.0;
+        double c = 1.0;
+        {
+            double distance = (intersections[idx_of_previous_intersect_to_section] - x).length();
+            a += height(intersections[idx_of_previous_intersect_to_section]) / distance;
+            b += 1.0 / distance;
+            c /= distance;
+        }
+        {
+            double distance = (intersections[idx_of_previous_intersect_to_section + 1] - x).length();
+            a += height(intersections[idx_of_previous_intersect_to_section + 1]) / distance;
+            b += 1.0 / distance;
+            c /= distance;
+        }
+        /*
         for (int j = 0; j < intersections.size(); j++) {
             double distance = (intersections[j] - x).length();
             a += ((j == 0 || j % 2 == 1)? 1.0 : -1.0) * height(intersections[j]) / distance;
@@ -43,7 +55,7 @@ double Geometry::ModifiedGordonWixomSurface::eval(const Point2D &x) const
                 d += ((idx_of_previous_intersect_to_section == 0 || j % 2 == 1)? 1.0 : -1.0) / distance;
             }
         }
-        c *= d;
+        */
         integral_den += a / b * c * delta_theta;
         integral_div += c * delta_theta;
     }
