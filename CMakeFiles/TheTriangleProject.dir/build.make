@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/zoltan/codeProjects/PseudoharmonicSurface
+CMAKE_SOURCE_DIR = /home/simon/Documents/Projects/PseudoHarmonicInterpolation-Linux
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/zoltan/codeProjects/PseudoharmonicSurface
+CMAKE_BINARY_DIR = /home/simon/Documents/Projects/PseudoHarmonicInterpolation-Linux
 
 # Include any dependencies generated for this target.
 include CMakeFiles/TheTriangleProject.dir/depend.make
@@ -72,29 +72,77 @@ include CMakeFiles/TheTriangleProject.dir/flags.make
 CMakeFiles/TheTriangleProject.dir/main.o: CMakeFiles/TheTriangleProject.dir/flags.make
 CMakeFiles/TheTriangleProject.dir/main.o: main.cpp
 CMakeFiles/TheTriangleProject.dir/main.o: CMakeFiles/TheTriangleProject.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zoltan/codeProjects/PseudoharmonicSurface/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/TheTriangleProject.dir/main.o"
-	/usr/bin/gcc $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TheTriangleProject.dir/main.o -MF CMakeFiles/TheTriangleProject.dir/main.o.d -o CMakeFiles/TheTriangleProject.dir/main.o -c /home/zoltan/codeProjects/PseudoharmonicSurface/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/simon/Documents/Projects/PseudoHarmonicInterpolation-Linux/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/TheTriangleProject.dir/main.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TheTriangleProject.dir/main.o -MF CMakeFiles/TheTriangleProject.dir/main.o.d -o CMakeFiles/TheTriangleProject.dir/main.o -c /home/simon/Documents/Projects/PseudoHarmonicInterpolation-Linux/main.cpp
 
 CMakeFiles/TheTriangleProject.dir/main.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/TheTriangleProject.dir/main.i"
-	/usr/bin/gcc $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/zoltan/codeProjects/PseudoharmonicSurface/main.cpp > CMakeFiles/TheTriangleProject.dir/main.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/simon/Documents/Projects/PseudoHarmonicInterpolation-Linux/main.cpp > CMakeFiles/TheTriangleProject.dir/main.i
 
 CMakeFiles/TheTriangleProject.dir/main.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/TheTriangleProject.dir/main.s"
-	/usr/bin/gcc $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/zoltan/codeProjects/PseudoharmonicSurface/main.cpp -o CMakeFiles/TheTriangleProject.dir/main.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/simon/Documents/Projects/PseudoHarmonicInterpolation-Linux/main.cpp -o CMakeFiles/TheTriangleProject.dir/main.s
+
+CMakeFiles/TheTriangleProject.dir/modifiedgordonwixomsurface.o: CMakeFiles/TheTriangleProject.dir/flags.make
+CMakeFiles/TheTriangleProject.dir/modifiedgordonwixomsurface.o: modifiedgordonwixomsurface.cpp
+CMakeFiles/TheTriangleProject.dir/modifiedgordonwixomsurface.o: CMakeFiles/TheTriangleProject.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/simon/Documents/Projects/PseudoHarmonicInterpolation-Linux/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/TheTriangleProject.dir/modifiedgordonwixomsurface.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TheTriangleProject.dir/modifiedgordonwixomsurface.o -MF CMakeFiles/TheTriangleProject.dir/modifiedgordonwixomsurface.o.d -o CMakeFiles/TheTriangleProject.dir/modifiedgordonwixomsurface.o -c /home/simon/Documents/Projects/PseudoHarmonicInterpolation-Linux/modifiedgordonwixomsurface.cpp
+
+CMakeFiles/TheTriangleProject.dir/modifiedgordonwixomsurface.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/TheTriangleProject.dir/modifiedgordonwixomsurface.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/simon/Documents/Projects/PseudoHarmonicInterpolation-Linux/modifiedgordonwixomsurface.cpp > CMakeFiles/TheTriangleProject.dir/modifiedgordonwixomsurface.i
+
+CMakeFiles/TheTriangleProject.dir/modifiedgordonwixomsurface.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/TheTriangleProject.dir/modifiedgordonwixomsurface.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/simon/Documents/Projects/PseudoHarmonicInterpolation-Linux/modifiedgordonwixomsurface.cpp -o CMakeFiles/TheTriangleProject.dir/modifiedgordonwixomsurface.s
+
+CMakeFiles/TheTriangleProject.dir/vector.o: CMakeFiles/TheTriangleProject.dir/flags.make
+CMakeFiles/TheTriangleProject.dir/vector.o: vector.cc
+CMakeFiles/TheTriangleProject.dir/vector.o: CMakeFiles/TheTriangleProject.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/simon/Documents/Projects/PseudoHarmonicInterpolation-Linux/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/TheTriangleProject.dir/vector.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TheTriangleProject.dir/vector.o -MF CMakeFiles/TheTriangleProject.dir/vector.o.d -o CMakeFiles/TheTriangleProject.dir/vector.o -c /home/simon/Documents/Projects/PseudoHarmonicInterpolation-Linux/vector.cc
+
+CMakeFiles/TheTriangleProject.dir/vector.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/TheTriangleProject.dir/vector.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/simon/Documents/Projects/PseudoHarmonicInterpolation-Linux/vector.cc > CMakeFiles/TheTriangleProject.dir/vector.i
+
+CMakeFiles/TheTriangleProject.dir/vector.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/TheTriangleProject.dir/vector.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/simon/Documents/Projects/PseudoHarmonicInterpolation-Linux/vector.cc -o CMakeFiles/TheTriangleProject.dir/vector.s
+
+CMakeFiles/TheTriangleProject.dir/matrix3x3.o: CMakeFiles/TheTriangleProject.dir/flags.make
+CMakeFiles/TheTriangleProject.dir/matrix3x3.o: matrix3x3.cc
+CMakeFiles/TheTriangleProject.dir/matrix3x3.o: CMakeFiles/TheTriangleProject.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/simon/Documents/Projects/PseudoHarmonicInterpolation-Linux/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/TheTriangleProject.dir/matrix3x3.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TheTriangleProject.dir/matrix3x3.o -MF CMakeFiles/TheTriangleProject.dir/matrix3x3.o.d -o CMakeFiles/TheTriangleProject.dir/matrix3x3.o -c /home/simon/Documents/Projects/PseudoHarmonicInterpolation-Linux/matrix3x3.cc
+
+CMakeFiles/TheTriangleProject.dir/matrix3x3.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/TheTriangleProject.dir/matrix3x3.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/simon/Documents/Projects/PseudoHarmonicInterpolation-Linux/matrix3x3.cc > CMakeFiles/TheTriangleProject.dir/matrix3x3.i
+
+CMakeFiles/TheTriangleProject.dir/matrix3x3.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/TheTriangleProject.dir/matrix3x3.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/simon/Documents/Projects/PseudoHarmonicInterpolation-Linux/matrix3x3.cc -o CMakeFiles/TheTriangleProject.dir/matrix3x3.s
 
 # Object files for target TheTriangleProject
 TheTriangleProject_OBJECTS = \
-"CMakeFiles/TheTriangleProject.dir/main.o"
+"CMakeFiles/TheTriangleProject.dir/main.o" \
+"CMakeFiles/TheTriangleProject.dir/modifiedgordonwixomsurface.o" \
+"CMakeFiles/TheTriangleProject.dir/vector.o" \
+"CMakeFiles/TheTriangleProject.dir/matrix3x3.o"
 
 # External object files for target TheTriangleProject
 TheTriangleProject_EXTERNAL_OBJECTS =
 
 TheTriangleProject: CMakeFiles/TheTriangleProject.dir/main.o
+TheTriangleProject: CMakeFiles/TheTriangleProject.dir/modifiedgordonwixomsurface.o
+TheTriangleProject: CMakeFiles/TheTriangleProject.dir/vector.o
+TheTriangleProject: CMakeFiles/TheTriangleProject.dir/matrix3x3.o
 TheTriangleProject: CMakeFiles/TheTriangleProject.dir/build.make
 TheTriangleProject: triangle/triangle.o
 TheTriangleProject: CMakeFiles/TheTriangleProject.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/zoltan/codeProjects/PseudoharmonicSurface/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable TheTriangleProject"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/simon/Documents/Projects/PseudoHarmonicInterpolation-Linux/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable TheTriangleProject"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/TheTriangleProject.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -106,6 +154,6 @@ CMakeFiles/TheTriangleProject.dir/clean:
 .PHONY : CMakeFiles/TheTriangleProject.dir/clean
 
 CMakeFiles/TheTriangleProject.dir/depend:
-	cd /home/zoltan/codeProjects/PseudoharmonicSurface && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/zoltan/codeProjects/PseudoharmonicSurface /home/zoltan/codeProjects/PseudoharmonicSurface /home/zoltan/codeProjects/PseudoharmonicSurface /home/zoltan/codeProjects/PseudoharmonicSurface /home/zoltan/codeProjects/PseudoharmonicSurface/CMakeFiles/TheTriangleProject.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/simon/Documents/Projects/PseudoHarmonicInterpolation-Linux && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/simon/Documents/Projects/PseudoHarmonicInterpolation-Linux /home/simon/Documents/Projects/PseudoHarmonicInterpolation-Linux /home/simon/Documents/Projects/PseudoHarmonicInterpolation-Linux /home/simon/Documents/Projects/PseudoHarmonicInterpolation-Linux /home/simon/Documents/Projects/PseudoHarmonicInterpolation-Linux/CMakeFiles/TheTriangleProject.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/TheTriangleProject.dir/depend
 

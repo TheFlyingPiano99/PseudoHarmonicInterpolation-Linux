@@ -1,0 +1,1 @@
+/usr/bin/c++ -rdynamic CMakeFiles/PseudoHarmonicSurface.dir/main.o CMakeFiles/PseudoHarmonicSurface.dir/modifiedgordonwixomsurface.o CMakeFiles/PseudoHarmonicSurface.dir/vector.o CMakeFiles/PseudoHarmonicSurface.dir/matrix3x3.o -o PseudoHarmonicSurface  triangle/triangle.o 

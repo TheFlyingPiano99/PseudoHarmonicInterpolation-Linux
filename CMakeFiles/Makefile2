@@ -54,16 +54,16 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/zoltan/codeProjects/PseudoharmonicSurface
+CMAKE_SOURCE_DIR = /home/simon/Documents/Projects/PseudoHarmonicInterpolation-Linux
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/zoltan/codeProjects/PseudoharmonicSurface
+CMAKE_BINARY_DIR = /home/simon/Documents/Projects/PseudoHarmonicInterpolation-Linux
 
 #=============================================================================
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/TheTriangleProject.dir/all
+all: CMakeFiles/PseudoHarmonicSurface.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -71,34 +71,34 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/TheTriangleProject.dir/clean
+clean: CMakeFiles/PseudoHarmonicSurface.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/TheTriangleProject.dir
+# Target rules for target CMakeFiles/PseudoHarmonicSurface.dir
 
 # All Build rule for target.
-CMakeFiles/TheTriangleProject.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/TheTriangleProject.dir/build.make CMakeFiles/TheTriangleProject.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/TheTriangleProject.dir/build.make CMakeFiles/TheTriangleProject.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/zoltan/codeProjects/PseudoharmonicSurface/CMakeFiles --progress-num=1,2 "Built target TheTriangleProject"
-.PHONY : CMakeFiles/TheTriangleProject.dir/all
+CMakeFiles/PseudoHarmonicSurface.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PseudoHarmonicSurface.dir/build.make CMakeFiles/PseudoHarmonicSurface.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PseudoHarmonicSurface.dir/build.make CMakeFiles/PseudoHarmonicSurface.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/simon/Documents/Projects/PseudoHarmonicInterpolation-Linux/CMakeFiles --progress-num=1,2,3,4,5 "Built target PseudoHarmonicSurface"
+.PHONY : CMakeFiles/PseudoHarmonicSurface.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/TheTriangleProject.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/zoltan/codeProjects/PseudoharmonicSurface/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/TheTriangleProject.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/zoltan/codeProjects/PseudoharmonicSurface/CMakeFiles 0
-.PHONY : CMakeFiles/TheTriangleProject.dir/rule
+CMakeFiles/PseudoHarmonicSurface.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/simon/Documents/Projects/PseudoHarmonicInterpolation-Linux/CMakeFiles 5
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/PseudoHarmonicSurface.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/simon/Documents/Projects/PseudoHarmonicInterpolation-Linux/CMakeFiles 0
+.PHONY : CMakeFiles/PseudoHarmonicSurface.dir/rule
 
 # Convenience name for target.
-TheTriangleProject: CMakeFiles/TheTriangleProject.dir/rule
-.PHONY : TheTriangleProject
+PseudoHarmonicSurface: CMakeFiles/PseudoHarmonicSurface.dir/rule
+.PHONY : PseudoHarmonicSurface
 
 # clean rule for target.
-CMakeFiles/TheTriangleProject.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/TheTriangleProject.dir/build.make CMakeFiles/TheTriangleProject.dir/clean
-.PHONY : CMakeFiles/TheTriangleProject.dir/clean
+CMakeFiles/PseudoHarmonicSurface.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PseudoHarmonicSurface.dir/build.make CMakeFiles/PseudoHarmonicSurface.dir/clean
+.PHONY : CMakeFiles/PseudoHarmonicSurface.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.
