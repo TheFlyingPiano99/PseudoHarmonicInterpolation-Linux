@@ -23,7 +23,7 @@ double Geometry::ModifiedGordonWixomSurface::eval(const Point2D &x) const
             continue;
         }
 
-        inr idx_of_previous_intersect_to_section = 0;
+        int idx_of_previous_intersect_to_section = 0;
         for (int j = 0; j < intersections.size() - 1; j += 2) {
             if ((intersections[j] - x).dot(intersections[j + 1] - x)) {
                 idx_of_previous_intersect_to_section = j;
