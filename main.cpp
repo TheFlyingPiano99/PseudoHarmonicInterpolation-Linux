@@ -118,7 +118,7 @@ int main(int argc, char **argv) {
 			[](double t) { double r = 2; return Geometry::Point2D((r + 1.0 * std::sin(t * 6 * 2 * M_PI)) * std::cos(t * 2 * M_PI), (r + 1.0 * std::sin(t * 6 * 2 * M_PI)) * std::sin(t * 2 * M_PI)); }
 		),
 		std::function<double(Geometry::Point2D)>(
-			[](Geometry::Point2D p) { return std::sin((std::pow(p[0], 2) + std::pow(p[1], 2)) * 2 * M_PI) + std::pow((std::pow(p[0], 2) + std::pow(p[1], 2))) * 0.25; }
+			[](Geometry::Point2D p) { return std::sin((std::pow(p[0], 2) + std::pow(p[1], 2)) * 2 * M_PI) + std::pow((std::pow(p[0], 2) + std::pow(p[1], 2)), 2) * 0.25; }
 		)
 	);
 	write_geometry(surface4, "surface4.obj");
