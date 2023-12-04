@@ -25,6 +25,7 @@ double Geometry::ModifiedGordonWixomSurface::eval(const Point2D &x) const
         auto intersections = findLineCurveIntersections(x, direction);
         
         if ((intersections.first.size() + intersections.second.size()) % 2 != 0) {   // Number of total intersections along a line is not even: x not inside the shape
+            std::cout << "Number of intersections is " << (intersections.first.size() + intersections.second.size()) << ", at point: (" << x[0] << ", " << x[1] << "); direction: (" << direction[0] << ", " << direction[1] << ")" << std::endl;
             continue;
         }
 
