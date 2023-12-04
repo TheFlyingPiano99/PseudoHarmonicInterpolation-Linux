@@ -80,7 +80,7 @@ void write_geometry(const Geometry::ModifiedGordonWixomSurface& surface, const c
 
 int main(int argc, char **argv) {
 
-	// Create surface:
+	// Create surfaces:
 	Geometry::ModifiedGordonWixomSurface surface1(
 		std::function<Geometry::Point2D(double)>(
 			[](double t){ double r = 2; return Geometry::Point2D(r * std::cos(t * 2 * M_PI), r * std::sin(t * 2 * M_PI)); }
