@@ -69,12 +69,14 @@ void write_geometry(const Geometry::ModifiedGordonWixomSurface& surface, const c
 		<< out.pointlist[2 * i + 1]
 		<< std::endl;
 	for (int i = 0; i < out.numberoftriangles; ++i)
-		f << "f " << out.trianglelist[3*i] + 1 << ' '
+		f << "f "
+			<< out.trianglelist[3*i] + 1 << ' '
 			<< out.trianglelist[3*i+1] + 1 << ' '
 			<< out.trianglelist[3*i+2] + 1 << std::endl;
 
 	trifree(out.pointlist);
 	trifree(out.trianglelist);
+	std::cout << "Writing " << filename << " is finished." << std::endl;
 }
 
 
