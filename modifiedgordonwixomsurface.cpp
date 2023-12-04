@@ -10,16 +10,21 @@ Geometry::ModifiedGordonWixomSurface::ModifiedGordonWixomSurface(const std::func
 
 double Geometry::ModifiedGordonWixomSurface::eval(const Point2D &x) const
 {
-    constexpr int n = 100;
+    constexpr int n = 128;
     constexpr double delta_theta = 2.0 * M_PI / n;
+    constexpr double offset = 0.1;
+
     double integral_den = 0.0;
     double integral_div = 0.0;
     for (int i = 0; i < n; i++) {
-        Vector2D direction(std::cos(i * delta_theta), std::sin(i * delta_theta));
+        Vector2D direction(std::cos(i * delta_theta + offset), std::sin(i * delta_theta + offset));
+        if (direction[0] == 0.0 || direction[1] == 0.0) {
+            direction(std::cos((i + 0.5) * delta_theta + offset), std::sin((i + 0.5) * delta_theta + offset));
+        }
 
         auto intersections = findLineCurveIntersections(x, direction);
         
-        if ((intersections.first.size() + intersection.second.size()) % 2 != 0) {   // Number of total intersections along a line is not even: x not inside the shape
+        if ((intersections.first.size() + intersections.second.size()) % 2 != 0) {   // Number of total intersections along a line is not even: x not inside the shape
             continue;
         }
 
