@@ -1,3 +1,0 @@
-/home/simon/Documents/Projects/PseudoHarmonicInterpolation-Linux/build/CMakeFiles/TheTriangleProject.dir
-/home/simon/Documents/Projects/PseudoHarmonicInterpolation-Linux/build/CMakeFiles/edit_cache.dir
-/home/simon/Documents/Projects/PseudoHarmonicInterpolation-Linux/build/CMakeFiles/rebuild_cache.dir

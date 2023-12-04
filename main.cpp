@@ -63,20 +63,26 @@ void write_geometry(const Geometry::ModifiedGordonWixomSurface& surface, const c
 	// Write an OBJ file as the output
 	std::ofstream f(filename);
 	for (int i = 0; i < out.numberofpoints; ++i)
-		f << "v " << out.pointlist[2*i] << ' ' << out.pointlist[2*i+1] << ' '
-		<< surface.eval(Geometry::Point2D(out.pointlist[2 * i], out.pointlist[2 * i + 1])) << std::endl;
+		f << "v "
+		<< out.pointlist[2*i] << ' '
+		<< surface.eval(Geometry::Point2D(out.pointlist[2 * i], out.pointlist[2 * i + 1])) << ' '
+		<< out.pointlist[2 * i + 1]
+		<< std::endl;
 	for (int i = 0; i < out.numberoftriangles; ++i)
-		f << "f " << out.trianglelist[3*i] + 1 << ' '
+		f << "f "
+			<< out.trianglelist[3*i] + 1 << ' '
 			<< out.trianglelist[3*i+1] + 1 << ' '
 			<< out.trianglelist[3*i+2] + 1 << std::endl;
 
 	trifree(out.pointlist);
 	trifree(out.trianglelist);
+	std::cout << "Writing " << filename << " is finished." << std::endl;
 }
+
 
 int main(int argc, char **argv) {
 
-	// Create surface:
+	// Create surfaces:
 	Geometry::ModifiedGordonWixomSurface surface1(
 		std::function<Geometry::Point2D(double)>(
 			[](double t){ double r = 2; return Geometry::Point2D(r * std::cos(t * 2 * M_PI), r * std::sin(t * 2 * M_PI)); }
@@ -106,6 +112,16 @@ int main(int argc, char **argv) {
 		)
 	);
 	write_geometry(surface3, "surface3.obj");
+
+	Geometry::ModifiedGordonWixomSurface surface4(
+		std::function<Geometry::Point2D(double)>(
+			[](double t) { double r = 2; return Geometry::Point2D((r + 1.0 * std::sin(t * 6 * 2 * M_PI)) * std::cos(t * 2 * M_PI), (r + 1.0 * std::sin(t * 6 * 2 * M_PI)) * std::sin(t * 2 * M_PI)); }
+		),
+		std::function<double(Geometry::Point2D)>(
+			[](Geometry::Point2D p) { return std::sin((std::pow(p[0], 2) + std::pow(p[1], 2)) * 2 * M_PI) + std::pow((std::pow(p[0], 2) + std::pow(p[1], 2))) * 0.25; }
+		)
+	);
+	write_geometry(surface4, "surface4.obj");
 
 	return 0;
 }
