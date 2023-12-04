@@ -19,43 +19,25 @@ double Geometry::ModifiedGordonWixomSurface::eval(const Point2D &x) const
 
         auto intersections = findLineCurveIntersections(x, direction);
 
-        if (intersections.size() % 2 != 0) {
-            continue;
-        }
-
-        int idx_of_previous_intersect_to_section = 0;
-        for (int j = 0; j < intersections.size() - 1; j += 2) {
-            if ((intersections[j] - x).dot(intersections[j + 1] - x) < 0) {
-                idx_of_previous_intersect_to_section = j;
-                break;
-            }
-        }
-
         double a = 0.0;
         double b = 0.0;
         double c = 1.0;
-        {
-            double distance = (intersections[idx_of_previous_intersect_to_section] - x).length();
-            a += height(intersections[idx_of_previous_intersect_to_section]) / distance;
-            b += 1.0 / distance;
-            c /= distance;
+        double d = 0.0;
+        for (int j = 0; j < intersections.first.size(); j++) {
+            double distance = (intersections.first[j] - x).length();
+            a += ((j % 2 == 0) ? 1.0 : -1.0) * height(intersections.first[j]) / distance;
+            b += ((j % 2 == 0) ? 1.0 : -1.0) / distance;
+            d += ((j % 2 == 0) ? 1.0 : -1.0) / distance;
         }
-        {
-            double distance = (intersections[idx_of_previous_intersect_to_section + 1] - x).length();
-            a += height(intersections[idx_of_previous_intersect_to_section + 1]) / distance;
-            b += 1.0 / distance;
-            c /= distance;
+        c *= d;
+        d = 0.0;
+        for (int j = 0; j < intersections.second.size(); j++) {
+            double distance = (intersections.second[j] - x).length();
+            a += ((j % 2 == 0) ? 1.0 : -1.0) * height(intersections.second[j]) / distance;
+            b += ((j % 2 == 0) ? 1.0 : -1.0) / distance;
+            d += ((j % 2 == 0) ? 1.0 : -1.0) / distance;
         }
-        /*
-        for (int j = 0; j < intersections.size(); j++) {
-            double distance = (intersections[j] - x).length();
-            a += ((j == 0 || j % 2 == 1)? 1.0 : -1.0) * height(intersections[j]) / distance;
-            b += ((j == 0 || j % 2 == 1)? 1.0 : -1.0) / distance;
-            if (0 != j) {
-                d += ((idx_of_previous_intersect_to_section == 0 || j % 2 == 1)? 1.0 : -1.0) / distance;
-            }
-        }
-        */
+        c *= d;
         integral_den += a / b * c * delta_theta;
         integral_div += c * delta_theta;
     }
@@ -105,11 +87,11 @@ void Geometry::ModifiedGordonWixomSurface::discretizeCurve()
     }
 }
 
-std::vector<Geometry::Point2D> Geometry::ModifiedGordonWixomSurface::findLineCurveIntersections(
+std::pair<std::vector<Geometry::Point2D>, std::vector<Geometry::Point2D>> Geometry::ModifiedGordonWixomSurface::findLineCurveIntersections(
     const Point2D& x, const Vector2D& direction
 ) const
 {
-    std::vector<Point2D> intersection_points;
+    std::pair<std::vector<Geometry::Point2D>, std::vector<Geometry::Point2D>> intersection_points;  // The first of the pair is on one side of the line and the second of the pair is on the other side of the line respectively to the x point.
     for (int i = 0; i < discretizedCurve.size(); i++){
         Point2D p0 = discretizedCurve[i];
         Point2D p1 = (i == discretizedCurve.size() - 1)? discretizedCurve[0] : discretizedCurve[i + 1];
@@ -122,7 +104,13 @@ std::vector<Geometry::Point2D> Geometry::ModifiedGordonWixomSurface::findLineCur
         double t = (p0[1] - x[1] - direction[1] * (p0[0] - x[0]) / direction[0])
                    / (direction[1] * sectionDir[0] / direction[0] - sectionDir[1]);
         if (t >= 0 && t < sectionLength) {
-            intersection_points.push_back(p0 + sectionDir * t);
+            double tau = (p0[0] + t * sectionDir[0] - x[0]) / direction[0];
+            if (tau < 0) {
+                intersection_points.first.push_back(p0 + sectionDir * t);
+            }
+            else {
+                intersection_points.second.push_back(p0 + sectionDir * t);
+            }
         }
     }
     return intersection_points;

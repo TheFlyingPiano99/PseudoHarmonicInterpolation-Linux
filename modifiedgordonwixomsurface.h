@@ -2,6 +2,7 @@
 
 #include "geometry.hh"
 #include <functional>
+#include <utility>
 
 namespace Geometry {
 
@@ -21,9 +22,10 @@ namespace Geometry {
     void setHeight(const std::function<double(Point2D)>& curve);
 
     /*
-     * Returns an array of intersection points
+     * Returns a pair of arrays of intersection points
+     * Points in the first array of the pair are on the oposite side of the line related to the x point than the points in the second array of the pair.
     */
-    std::vector<Point2D> findLineCurveIntersections(const Point2D& x, const Vector2D& direction) const;
+    std::pair<std::vector<Geometry::Point2D>, std::vector<Geometry::Point2D>> findLineCurveIntersections(const Point2D& x, const Vector2D& direction) const;
 
     Point2D getBoundingRectangleMin() const;
 
@@ -33,6 +35,7 @@ namespace Geometry {
 
 private:
     void discretizeCurve();
+
     Point2D boundingRectangleMin;
     Point2D boundingRectangleMax;
     std::function<Geometry::Point2D(double)> curve;
