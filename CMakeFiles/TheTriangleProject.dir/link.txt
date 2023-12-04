@@ -1,1 +1,0 @@
-/usr/bin/c++ -rdynamic CMakeFiles/TheTriangleProject.dir/main.o CMakeFiles/TheTriangleProject.dir/modifiedgordonwixomsurface.o CMakeFiles/TheTriangleProject.dir/vector.o CMakeFiles/TheTriangleProject.dir/matrix3x3.o -o TheTriangleProject  triangle/triangle.o 
