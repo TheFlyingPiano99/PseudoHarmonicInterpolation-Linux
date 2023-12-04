@@ -18,6 +18,10 @@ double Geometry::ModifiedGordonWixomSurface::eval(const Point2D &x) const
         Vector2D direction(std::cos(i * delta_theta), std::sin(i * delta_theta));
 
         auto intersections = findLineCurveIntersections(x, direction);
+        
+        if ((intersections.first.size() + intersection.second.size()) % 2 != 0) {   // Number of total intersections along a line is not even: x not inside the shape
+            continue;
+        }
 
         double a = 0.0;
         double b = 0.0;
