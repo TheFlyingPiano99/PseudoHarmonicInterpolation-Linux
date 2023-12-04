@@ -19,7 +19,7 @@ double Geometry::ModifiedGordonWixomSurface::eval(const Point2D &x) const
     for (int i = 0; i < n; i++) {
         Vector2D direction(std::cos(i * delta_theta + offset), std::sin(i * delta_theta + offset));
         if (direction[0] == 0.0 || direction[1] == 0.0) {
-            directions(std::cos((i + 0.5) * delta_theta + offset), std::sin((i + 0.5) * delta_theta + offset));
+            direction = Vector2D(std::cos((i + 0.5) * delta_theta + offset), std::sin((i + 0.5) * delta_theta + offset));
         }
 
         auto intersections = findLineCurveIntersections(x, direction);
