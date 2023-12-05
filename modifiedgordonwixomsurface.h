@@ -25,7 +25,8 @@ namespace Geometry {
      * Returns a pair of arrays of intersection points
      * Points in the first array of the pair are on the oposite side of the line related to the x point than the points in the second array of the pair.
     */
-    std::pair<std::vector<Geometry::Point2D>, std::vector<Geometry::Point2D>> findLineCurveIntersections(const Point2D& x, const Vector2D& direction) const;
+    std::pair<std::vector<std::pair<Geometry::Point2D, bool>>, std::vector<std::pair<Geometry::Point2D, bool>>> findLineCurveIntersections(const Point2D& x, const Vector2D& direction,
+		    std::pair<std::vector<bool>, std::vector<bool>>& isHittingConcaveCorner) const;
 
     Point2D getBoundingRectangleMin() const;
 
@@ -41,5 +42,6 @@ private:
     std::function<Geometry::Point2D(double)> curve;
     std::function<double(Point2D)> height;
     std::vector<Point2D> discretizedCurve;
+    std::vector<bool> isConcaveCorner;
   };
 }

@@ -160,5 +160,20 @@ int main(int argc, char **argv) {
 	);
 	write_geometry(surface6, "surface6.obj");
 
+	Geometry::ModifiedGordonWixomSurface surface7(
+		std::function<Geometry::Point2D(double)>(
+			[](double t) { double r = 2; double o = 0.0;
+			return Geometry::Point2D((r + 1.0 * std::sin(t * 4 * 2 * M_PI + o)) * std::cos(t * 2 * M_PI), (r + 1.0 * std::sin(t * 4 * 2 * M_PI + o)) * std::sin(t * 2 * M_PI)); }
+		),
+		std::function<double(Geometry::Point2D)>(
+			[](Geometry::Point2D p) {
+				return std::sin(std::sqrt(std::pow(p[0], 2) + std::pow(p[1], 2)) * M_PI) + (std::pow(p[0], 2)
+				+ std::pow(p[1], 2)) * 0.1
+				+ std::sin(std::atan2(p[0], p[1]) * 6);
+			}
+		)
+	);
+	write_geometry(surface7, "surface7.obj");
+
 	return 0;
 }

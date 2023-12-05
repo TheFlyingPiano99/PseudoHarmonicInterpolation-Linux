@@ -22,7 +22,8 @@ double Geometry::ModifiedGordonWixomSurface::eval(const Point2D &x) const
 	    std::cout << "Recalculating direction." << std::endl;
 	}
 
-	auto intersections = findLineCurveIntersections(x, direction);
+	std::pair<std::vector<bool>, std::vector<bool>> isHittingConcaveCorner;
+	auto intersections = findLineCurveIntersections(x, direction, isHittingConcaveCorner);
 	
 
 	// Calculate weights:
@@ -31,19 +32,25 @@ double Geometry::ModifiedGordonWixomSurface::eval(const Point2D &x) const
 	double c = 1.0;
 	double d = 0.0;
 	for (int j = 0; j < intersections.first.size(); j++) {
-	    double distance = (intersections.first[j] - x).length();
+	    if (intersections.first[j].second) {	// is hitting concave corner?
+//		continue;
+	    }
+	    double distance = (intersections.first[j].first - x).length();
 	    if (distance == 0) {
 		    return height(x);
 	    }
-	    a += ((j % 2 == 0) ? 1.0 : -1.0) * height(intersections.first[j]) / distance;
+	    a += ((j % 2 == 0) ? 1.0 : -1.0) * height(intersections.first[j].first) / distance;
 	    b += ((j % 2 == 0) ? 1.0 : -1.0) / distance;
 	    d += ((j % 2 == 0) ? 1.0 : -1.0) / distance;
 	}
 	c *= d;
 	d = 0.0;
 	for (int j = 0; j < intersections.second.size(); j++) {
-	    double distance = (intersections.second[j] - x).length();
-	    a += ((j % 2 == 0) ? 1.0 : -1.0) * height(intersections.second[j]) / distance;
+	    if (intersections.second[j].second) {	// is hitting concave corner?
+//		continue;
+	    }
+	    double distance = (intersections.second[j].first - x).length();
+	    a += ((j % 2 == 0) ? 1.0 : -1.0) * height(intersections.second[j].first) / distance;
 	    if (distance == 0) {
 		    return height(x);
 	    }
@@ -83,6 +90,7 @@ void Geometry::ModifiedGordonWixomSurface::discretizeCurve()
     for (int i = 0; i < n; i++) {
         Point2D p = curve(i / (double)n);
         discretizedCurve.push_back(p);
+
         // Update min and max:
         if (0 == i) {
             boundingRectangleMin = p;
@@ -103,13 +111,27 @@ void Geometry::ModifiedGordonWixomSurface::discretizeCurve()
             }
         }
     }
+
+    // Determine concave corners:
+    isConcaveCorner.clear();
+    isConcaveCorner.reserve(n);
+    std::pair<std::vector<bool>, std::vector<bool>> isHittingConcaveCorner;
+    for (int i = 0; i < n; i++) {
+	Point2D prev = discretizedCurve[(i > 0)? i - 1 : n - 1];
+	Point2D current = discretizedCurve[i];
+	Point2D next = discretizedCurve[(i < n - 1)? i + 1 : 0];
+	Vector2D tangent = (next - prev).normalize();
+	auto intersections = findLineCurveIntersections(current, tangent, isHittingConcaveCorner);
+	isConcaveCorner.push_back(intersections.first.size() % 2 == 1);	// tangent ray from concave corner will cross the polygon odd times.
+	
+    }
 }
 
-std::pair<std::vector<Geometry::Point2D>, std::vector<Geometry::Point2D>> Geometry::ModifiedGordonWixomSurface::findLineCurveIntersections(
-    const Point2D& x, const Vector2D& direction
+ std::pair<std::vector<std::pair<Geometry::Point2D, bool>>, std::vector<std::pair<Geometry::Point2D, bool>>> Geometry::ModifiedGordonWixomSurface::findLineCurveIntersections(
+    const Point2D& x, const Vector2D& direction, std::pair<std::vector<bool>, std::vector<bool>>& isHittingConcaveCorner
 ) const
 {
-    std::pair<std::vector<Geometry::Point2D>, std::vector<Geometry::Point2D>> intersection_points;  // The first of the pair is on one side of the line and the second of the pair is on the other side of the line respectively to the x point.
+    std::pair<std::vector<std::pair<Geometry::Point2D, bool>>, std::vector<std::pair<Geometry::Point2D, bool>>> intersection_points;  // The first of the pair is on one side of the line and the second of the pair is on the other side of the line respectively to the x point.
     for (int i = 0; i < discretizedCurve.size(); i++){
         Point2D p0 = discretizedCurve[i];
         Point2D p1 = (i == discretizedCurve.size() - 1)? discretizedCurve[0] : discretizedCurve[i + 1];
@@ -126,17 +148,28 @@ std::pair<std::vector<Geometry::Point2D>, std::vector<Geometry::Point2D>> Geomet
 	    if (tau != tau) {
 		std::cout << "Tau = NaN!" << std::endl;
 	    }
-            if (tau < 0) {
-                intersection_points.first.push_back(p0 + sectionDir * t);
+	    constexpr double epsilon = 0.00000001;
+	    if (tau < 0) {
+	    intersection_points.first.push_back(
+			std::make_pair(
+				p0 + sectionDir * t,
+				(isConcaveCorner[i] && t < epsilon) || (isConcaveCorner[(i == discretizedCurve.size() - 1)? 0 : i + 1] && sectionLength - t < epsilon)
+			)
+		);
             }
             else {
-                intersection_points.second.push_back(p0 + sectionDir * t);
+                intersection_points.second.push_back(
+				std::make_pair(
+					p0 + sectionDir * t,
+					(isConcaveCorner[i] && t < epsilon) || (isConcaveCorner[(i == discretizedCurve.size() - 1)? 0 : i + 1] && sectionLength - t < epsilon)
+				)
+			);
             }
         }
     }
     // Sort the points:
-    std::sort(intersection_points.first.begin(), intersection_points.first.end(), [x](Geometry::Point2D p0, Geometry::Point2D p1) { return (p0 - x).length() < (p1 - x).length();});
-    std::sort(intersection_points.second.begin(), intersection_points.second.end(), [x](Geometry::Point2D p0, Geometry::Point2D p1) { return (p0 - x).length() < (p1 - x).length();});
+    std::sort(intersection_points.first.begin(), intersection_points.first.end(), [x](std::pair<Geometry::Point2D, bool> p0, std::pair<Geometry::Point2D, bool> p1) { return (p0.first - x).length() < (p1.first - x).length();});
+    std::sort(intersection_points.second.begin(), intersection_points.second.end(), [x](std::pair<Geometry::Point2D, bool> p0, std::pair<Geometry::Point2D, bool> p1) { return (p0.first - x).length() < (p1.first - x).length();});
     return intersection_points;
 }
 
