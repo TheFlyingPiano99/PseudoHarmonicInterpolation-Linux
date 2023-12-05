@@ -22,8 +22,7 @@ double Geometry::ModifiedGordonWixomSurface::eval(const Point2D &x) const
 	    std::cout << "Recalculating direction." << std::endl;
 	}
 
-	std::pair<std::vector<bool>, std::vector<bool>> isHittingConcaveCorner;
-	auto intersections = findLineCurveIntersections(x, direction, isHittingConcaveCorner);
+	auto intersections = findLineCurveIntersections(x, direction);
 	
 
 	// Calculate weights:
@@ -115,21 +114,20 @@ void Geometry::ModifiedGordonWixomSurface::discretizeCurve()
     // Determine concave corners:
     isConcaveCorner.clear();
     isConcaveCorner.reserve(n);
-    std::pair<std::vector<bool>, std::vector<bool>> isHittingConcaveCorner;
     for (int i = 0; i < n; i++) {
 	Point2D prev = discretizedCurve[(i > 0)? i - 1 : n - 1];
 	Point2D current = discretizedCurve[i];
 	Point2D next = discretizedCurve[(i < n - 1)? i + 1 : 0];
 	Vector2D tangent = (next - prev).normalize();
-	auto intersections = findLineCurveIntersections(current, tangent, isHittingConcaveCorner);
+	auto intersections = findLineCurveIntersections(current, tangent);
 	isConcaveCorner.push_back(intersections.first.size() % 2 == 1);	// tangent ray from concave corner will cross the polygon odd times.
 	
     }
 }
 
- std::pair<std::vector<std::pair<Geometry::Point2D, bool>>, std::vector<std::pair<Geometry::Point2D, bool>>> Geometry::ModifiedGordonWixomSurface::findLineCurveIntersections(
-    const Point2D& x, const Vector2D& direction, std::pair<std::vector<bool>, std::vector<bool>>& isHittingConcaveCorner
-) const
+ std::pair<std::vector<std::pair<Geometry::Point2D, bool>>, std::vector<std::pair<Geometry::Point2D, bool>>>
+ Geometry::ModifiedGordonWixomSurface::findLineCurveIntersections(
+    const Point2D& x, const Vector2D& direction) const
 {
     std::pair<std::vector<std::pair<Geometry::Point2D, bool>>, std::vector<std::pair<Geometry::Point2D, bool>>> intersection_points;  // The first of the pair is on one side of the line and the second of the pair is on the other side of the line respectively to the x point.
     for (int i = 0; i < discretizedCurve.size(); i++){
