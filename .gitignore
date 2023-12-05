@@ -4,3 +4,4 @@ build/*
 ./.history/*
 CMakeFiles/*
 CMakeCache.txt
+PseudoHarmonicSurface
