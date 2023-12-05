@@ -11,50 +11,58 @@ Geometry::ModifiedGordonWixomSurface::ModifiedGordonWixomSurface(const std::func
 double Geometry::ModifiedGordonWixomSurface::eval(const Point2D &x) const
 {
     constexpr int n = 128;
-    constexpr double delta_theta = 2.0 * M_PI / n;
+    constexpr double delta_theta = M_PI / n;
     constexpr double offset = 0.1;
-
     double integral_den = 0.0;
     double integral_div = 0.0;
     for (int i = 0; i < n; i++) {
-        Vector2D direction(std::cos(i * delta_theta + offset), std::sin(i * delta_theta + offset));
-        if (direction[0] == 0.0 || direction[1] == 0.0) {
-            direction = Vector2D(std::cos((i + 0.5) * delta_theta + offset), std::sin((i + 0.5) * delta_theta + offset));
-        }
+	Vector2D direction(std::cos(i * delta_theta + offset), std::sin(i * delta_theta + offset));
+	if (direction[0] == 0.0 || direction[1] == 0.0) {
+	    direction = Vector2D(std::cos((i + 0.5) * delta_theta + offset), std::sin((i + 0.5) * delta_theta + offset));
+	    std::cout << "Recalculating direction." << std::endl;
+	}
 
-        auto intersections = findLineCurveIntersections(x, direction);
-        
-        if ((intersections.first.size() + intersections.second.size()) % 2 != 0) {   // Number of total intersections along a line is not even: x not inside the shape
-            std::cout << "Number of intersections is " << (intersections.first.size() + intersections.second.size()) << ", at point: (" << x[0] << ", " << x[1] << "); direction: (" << direction[0] << ", " << direction[1] << ")" << std::endl;
-            continue;
-        }
+	auto intersections = findLineCurveIntersections(x, direction);
+	
 
-        double a = 0.0;
-        double b = 0.0;
-        double c = 1.0;
-        double d = 0.0;
-        for (int j = 0; j < intersections.first.size(); j++) {
-            double distance = (intersections.first[j] - x).length();
-            a += ((j % 2 == 0) ? 1.0 : -1.0) * height(intersections.first[j]) / distance;
-            b += ((j % 2 == 0) ? 1.0 : -1.0) / distance;
-            d += ((j % 2 == 0) ? 1.0 : -1.0) / distance;
-        }
-        c *= d;
-        d = 0.0;
-        for (int j = 0; j < intersections.second.size(); j++) {
-            double distance = (intersections.second[j] - x).length();
-            a += ((j % 2 == 0) ? 1.0 : -1.0) * height(intersections.second[j]) / distance;
-            b += ((j % 2 == 0) ? 1.0 : -1.0) / distance;
-            d += ((j % 2 == 0) ? 1.0 : -1.0) / distance;
-        }
-        c *= d;
-        integral_den += a / b * c * delta_theta;
-        integral_div += c * delta_theta;
+	// Calculate weights:
+	double a = 0.0;
+	double b = 0.0;
+	double c = 1.0;
+	double d = 0.0;
+	for (int j = 0; j < intersections.first.size(); j++) {
+	    double distance = (intersections.first[j] - x).length();
+	    if (distance == 0) {
+		    return height(x);
+	    }
+	    a += ((j % 2 == 0) ? 1.0 : -1.0) * height(intersections.first[j]) / distance;
+	    b += ((j % 2 == 0) ? 1.0 : -1.0) / distance;
+	    d += ((j % 2 == 0) ? 1.0 : -1.0) / distance;
+	}
+	c *= d;
+	d = 0.0;
+	for (int j = 0; j < intersections.second.size(); j++) {
+	    double distance = (intersections.second[j] - x).length();
+	    a += ((j % 2 == 0) ? 1.0 : -1.0) * height(intersections.second[j]) / distance;
+	    if (distance == 0) {
+		    return height(x);
+	    }
+	    b += ((j % 2 == 0) ? 1.0 : -1.0) / distance;
+	    d += ((j % 2 == 0) ? 1.0 : -1.0) / distance;
+	}
+	c *= d;
+	integral_den += a / b * c;
+	integral_div += c;
     }
     double u = integral_den / integral_div;
-    if (u != u)
-        u = height(x);
-    return u;
+    if (u != u) {
+	std::cout << "u was NaN!" << std::endl;
+	std::cout << "u = " << integral_den << " / " << integral_div << std::endl; 
+	return height(x);
+    }
+    else {
+	return u;
+    }
 }
 
 void Geometry::ModifiedGordonWixomSurface::setCurve(const std::function<Point2D(double)> &_curve)
@@ -113,8 +121,11 @@ std::pair<std::vector<Geometry::Point2D>, std::vector<Geometry::Point2D>> Geomet
         Vector2D sectionDir = sectionDiff / sectionLength;
         double t = (p0[1] - x[1] - direction[1] * (p0[0] - x[0]) / direction[0])
                    / (direction[1] * sectionDir[0] / direction[0] - sectionDir[1]);
-        if (t >= 0 && t < sectionLength) {
+        if (t == t && t >= 0 && t < sectionLength) {
             double tau = (p0[0] + t * sectionDir[0] - x[0]) / direction[0];
+	    if (tau != tau) {
+		std::cout << "Tau = NaN!" << std::endl;
+	    }
             if (tau < 0) {
                 intersection_points.first.push_back(p0 + sectionDir * t);
             }
@@ -123,6 +134,9 @@ std::pair<std::vector<Geometry::Point2D>, std::vector<Geometry::Point2D>> Geomet
             }
         }
     }
+    // Sort the points:
+    std::sort(intersection_points.first.begin(), intersection_points.first.end(), [x](Geometry::Point2D p0, Geometry::Point2D p1) { return (p0 - x).length() < (p1 - x).length();});
+    std::sort(intersection_points.second.begin(), intersection_points.second.end(), [x](Geometry::Point2D p0, Geometry::Point2D p1) { return (p0 - x).length() < (p1 - x).length();});
     return intersection_points;
 }
 

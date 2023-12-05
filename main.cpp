@@ -23,7 +23,7 @@ void write_geometry(const Geometry::ModifiedGordonWixomSurface& surface, const c
 		points.push_back(discretizedCurve[i][0]);
 		points.push_back(discretizedCurve[i][1]);
 	}
-	double max_area = 0.01 * 0.611416847148; // nice number
+	double max_area = 0.0025 * 0.611416847148; // nice number
 
   // Input segments : just a closed polygon
   std::vector<int> segments; segments.reserve(n * 2);
@@ -83,9 +83,19 @@ void write_geometry(const Geometry::ModifiedGordonWixomSurface& surface, const c
 int main(int argc, char **argv) {
 
 	// Create surfaces:
-	Geometry::ModifiedGordonWixomSurface surface1(
+	Geometry::ModifiedGordonWixomSurface surface0(
 		std::function<Geometry::Point2D(double)>(
 			[](double t){ double r = 2; return Geometry::Point2D(r * std::cos(t * 2 * M_PI), r * std::sin(t * 2 * M_PI)); }
+		),
+		std::function<double(Geometry::Point2D)>(
+			[](Geometry::Point2D p) { return 0.5 * std::sin(p[0] * 2 * M_PI) + 0.5 * std::sin(p[0] * 2 * M_PI); }
+		)
+	);
+	write_geometry(surface0, "surface0.obj");
+
+	Geometry::ModifiedGordonWixomSurface surface1(
+		std::function<Geometry::Point2D(double)>(
+			[](double t){ double r = 2; return Geometry::Point2D((r + 1 * std::sin(t * 4 * M_PI)) * std::cos(t * 2 * M_PI), r * std::sin(t * 2 * M_PI)); }
 		),
 		std::function<double(Geometry::Point2D)>(
 			[](Geometry::Point2D p) { return 0.5 * std::sin(p[0] * 2 * M_PI) + 0.5 * std::sin(p[0] * 2 * M_PI); }
@@ -118,10 +128,37 @@ int main(int argc, char **argv) {
 			[](double t) { double r = 2; return Geometry::Point2D((r + 1.0 * std::sin(t * 6 * 2 * M_PI)) * std::cos(t * 2 * M_PI), (r + 1.0 * std::sin(t * 6 * 2 * M_PI)) * std::sin(t * 2 * M_PI)); }
 		),
 		std::function<double(Geometry::Point2D)>(
-			[](Geometry::Point2D p) { return std::sin((std::pow(p[0], 2) + std::pow(p[1], 2)) * 2 * M_PI) + std::pow((std::pow(p[0], 2) + std::pow(p[1], 2)), 2) * 0.25; }
+			[](Geometry::Point2D p) { return std::sin(std::sqrt(std::pow(p[0], 2) + std::pow(p[1], 2)) * M_PI) + (std::pow(p[0], 2) + std::pow(p[1], 2)) * 0.1; }
 		)
 	);
 	write_geometry(surface4, "surface4.obj");
+
+	Geometry::ModifiedGordonWixomSurface surface5(
+		std::function<Geometry::Point2D(double)>(
+			[](double t) { double r = 2; double o = 0.0; return Geometry::Point2D((r + 1.0 * std::sin(t * 6 * 2 * M_PI + o)) * std::cos(t * 2 * M_PI), (r + 1.0 * std::sin(t * 6 * 2 * M_PI + o)) * std::sin(t * 2 * M_PI)); }
+		),
+		std::function<double(Geometry::Point2D)>(
+			[](Geometry::Point2D p) { return std::sin(std::sqrt(std::pow(p[0], 2) + std::pow(p[1], 2)) * M_PI) + (std::pow(p[0], 2)
+				+ std::pow(p[1], 2)) * 0.1
+				+ std::sin(std::atan2(p[0], p[1]) * 6);
+			}
+		)
+	);
+	write_geometry(surface5, "surface5.obj");
+
+	Geometry::ModifiedGordonWixomSurface surface6(
+		std::function<Geometry::Point2D(double)>(
+			[](double t) { double r = 2; double o = 0.0; return Geometry::Point2D((r + 1.0 * std::sin(t * 6 * 2 * M_PI + o)) * std::cos(t * 2 * M_PI), (r + 1.0 * std::sin(t * 6 * 2 * M_PI + o)) * std::sin(t * 2 * M_PI)); }
+		),
+		std::function<double(Geometry::Point2D)>(
+			[](Geometry::Point2D p) {
+				return std::sin(std::sqrt(std::pow(p[0], 2) + std::pow(p[1], 2)) * M_PI) + (std::pow(p[0], 2)
+				+ std::pow(p[1], 2)) * 0.1
+				+ std::sin(std::atan2(p[0], p[1]) * 6);
+			}
+		)
+	);
+	write_geometry(surface6, "surface6.obj");
 
 	return 0;
 }
