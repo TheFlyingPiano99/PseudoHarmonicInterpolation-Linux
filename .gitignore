@@ -3,3 +3,4 @@ build/*
 .history/*
 ./.history/*
 CMakeFiles/*
+CMakeCache.txt
