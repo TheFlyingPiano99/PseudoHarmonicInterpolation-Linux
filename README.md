@@ -1,4 +1,4 @@
-# Pseudo Harmonic Surface Generator
+# Pseudo-harmonic Surface Generator
 
 This C++ program generates 3D geometry in Wavefront OBJ format.
 The generated surface is an approximation of harmonic surfaces.
